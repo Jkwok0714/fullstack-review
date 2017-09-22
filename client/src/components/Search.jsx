@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 class Search extends React.Component {
   constructor(props) {
@@ -16,14 +17,24 @@ class Search extends React.Component {
 
   search() {
     this.props.onSearch(this.state.term);
+    var queryTerm = {query: this.state.term};
+    $.post({
+      url: 'http://localhost:1128/repos',
+      data: JSON.stringify(queryTerm),
+      success: function(result) {
+        console.log('Ajaxxxed and got', result);
+      }
+    }).done(() => {
+      console.log('All done');
+    })
   }
 
   render() {
     return (<div>
       <h4>Add more repos!</h4>
-      Enter a github username: <input value={this.state.terms} onChange={this.onChange}/>       
-      <button onClick={this.search}> Add Repos </button>
-    </div>) 
+      Enter a github username: <input value={this.state.terms} onChange={this.onChange.bind(this)}/>
+      <button onClick={this.search.bind(this)}> Add Repos </button>
+    </div>)
   }
 }
 

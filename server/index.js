@@ -24,9 +24,15 @@ app.post('/repos', function (req, res) {
     var dataToAdd;
     helper.getReposByUsername(finalQuery)
     .then((data) => {
-      //Reformat data and save it
-      dataToAdd = database.reformat(JSON.parse(data));
-      return database.saveMultiple(dataToAdd);
+      data = JSON.parse(data);
+      console.log(data);
+      if (data.message) {
+        throw 'User doesn\'t exist';
+      } else {
+        //Reformat data and save it
+        dataToAdd = database.reformat(data);
+        return database.saveMultiple(dataToAdd);
+      }
     })
     .then(() => {
       return database.getTop25();
@@ -40,6 +46,10 @@ app.post('/repos', function (req, res) {
     })
     .catch((err) => {
       console.error(err);
+      res.status(404);
+      res.set('Content-Type', 'application/json');
+      // TODO: Send only 25 sorted by size
+      res.end('Bad User');
     });
   });
 });

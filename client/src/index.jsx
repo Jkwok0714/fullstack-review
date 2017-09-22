@@ -13,9 +13,28 @@ class App extends React.Component {
 
   }
 
-  search (term) {
-    console.log(`${term} was searched`);
+  componentDidMount () {
+    //Load stuff from the db
+    var self = this;
+    $.get({
+      url: 'http://localhost:1128/repos',
+      success: function(result) {
+        // console.log('Ajaxxxed and got', result);
+        self.search('Nothing', result);
+        alert('Loaded Data');
+      },
+      error: function(err) {
+        alert('Error:', err);
+      }
+    })
+  }
+
+  search (term, newRepos) {
+    console.log(`${term} was searched. Got new repos`, newRepos);
     // TODO
+    // this.state.repos = this.state.repos.concat(newRepos);
+    this.setState({repos: this.state.repos.concat(newRepos)});
+    console.log(this.state.repos.length);
   }
 
   render () {

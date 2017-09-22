@@ -16,13 +16,18 @@ class Search extends React.Component {
   }
 
   search() {
-    this.props.onSearch(this.state.term);
+    var self = this;
     var queryTerm = {query: this.state.term};
     $.post({
       url: 'http://localhost:1128/repos',
       data: JSON.stringify(queryTerm),
       success: function(result) {
-        console.log('Ajaxxxed and got', result);
+        // console.log('Ajaxxxed and got', result);
+        self.props.onSearch(self.state.term, result);
+        alert('Good');
+      },
+      error: function(err) {
+        alert('Error:', err);
       }
     }).done(() => {
       console.log('All done');

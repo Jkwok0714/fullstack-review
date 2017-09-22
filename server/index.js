@@ -1,4 +1,6 @@
-var Middleware = require('./middleware');
+let Middleware = require('./middleware');
+let helper = require('../helpers/github');
+let database = require('../database/index');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,23 +17,43 @@ app.post('/repos', function (req, res) {
     body += chunk;
   });
   req.on('end', () => {
-    console.log(JSON.parse(body).query);
+    var finalQuery = JSON.parse(body).query;
     // This route should take the github username provided
     // and get the repo information from the github API, then
     // save the repo information in the database
-    res.status(200);
-    res.set('Content-Type', 'application/json');
-    res.end(JSON.stringify('Stuffington'));
+    var dataToAdd;
+    helper.getReposByUsername(finalQuery)
+    .then((data) => {
+      //Reformat data and save it
+      dataToAdd = database.reformat(JSON.parse(data));
+      return database.saveMultiple(dataToAdd);
+    })
+    .then(() => {
+      return database.getTop25();
+    })
+    .then((top25) => {
+      console.log('Got data, sending all good to client');
+      res.status(200);
+      res.set('Content-Type', 'application/json');
+      // TODO: Send only 25 sorted by size
+      res.end(JSON.stringify(top25));
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   });
 });
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  console.log(req.query);
-  res.status(200);
-  res.set('Content-Type', 'application/json');
-  res.end('Stuff');
+  // console.log(req.query);
+  database.getTop25()
+  .then((data) => {
+    res.status(200);
+    res.set('Content-Type', 'application/json');
+    res.end(JSON.stringify(data));
+  });
 });
 
 

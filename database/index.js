@@ -27,7 +27,7 @@ let save = (options) => {
         console.error(err);
         reject(err);
       } else {
-        console.log('Added repo with options', options);
+        // console.log('Added repo with options', options);
         resolve();
       }
     });
@@ -70,7 +70,7 @@ let find = (query, callback) => {
 let reformat = (rawData) => {
   var result = [];
   for (var repo of rawData) {
-    console.log('Processing repo:',repo);
+    // console.log('Processing repo:',repo);
     var newRepo = {};
     newRepo.repo_id = repo.id;
     newRepo.name = repo.name;

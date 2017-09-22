@@ -33,7 +33,8 @@ class App extends React.Component {
     console.log(`${term} was searched. Got new repos`, newRepos);
     // TODO
     // this.state.repos = this.state.repos.concat(newRepos);
-    this.setState({repos: this.state.repos.concat(newRepos)});
+    // this.setState({repos: this.state.repos.concat(newRepos)});
+    this.setState({repos: newRepos});
     console.log(this.state.repos.length);
   }
 

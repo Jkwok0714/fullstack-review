@@ -64,6 +64,7 @@ app.get('/repos', function (req, res) {
     res.set('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
   });
+  // database.cleanDatabase();
 });
 
 

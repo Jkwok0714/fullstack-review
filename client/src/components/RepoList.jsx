@@ -8,7 +8,7 @@ const RepoList = (props) => (
     <div id="repoList">
 
       {props.repos.map((singleRepo, i) => {
-        return <RepoEntry repo={singleRepo} key={i} />
+        return <RepoEntry repo={singleRepo} key={i} num={i} />
       })
       }
   </div>

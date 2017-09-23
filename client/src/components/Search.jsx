@@ -23,8 +23,8 @@ class Search extends React.Component {
       data: JSON.stringify(queryTerm),
       success: function(result) {
         // console.log('Ajaxxxed and got', result);
-        self.props.onSearch(self.state.term, result);
         alert('New data loaded');
+        self.props.onSearch(self.state.term, result);
       },
       error: function(err) {
         alert('An error occurred', err);

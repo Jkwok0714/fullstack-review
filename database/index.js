@@ -100,6 +100,7 @@ let saveMultiple = (array) => {
     let i = 0;
     let loop = function() {
       if (i >= array.length) {
+        resolve('success');
         return;
       } else {
         save(array[i])
@@ -113,7 +114,6 @@ let saveMultiple = (array) => {
       }
     }
     loop();
-    resolve('success');
   });
 }
 

@@ -24,7 +24,7 @@ class Search extends React.Component {
       success: function(result) {
         // console.log('Ajaxxxed and got', result);
         self.props.onSearch(self.state.term, result);
-        alert('Good');
+        alert('New data loaded');
       },
       error: function(err) {
         alert('An error occurred', err);

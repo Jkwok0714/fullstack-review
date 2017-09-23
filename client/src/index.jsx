@@ -35,7 +35,6 @@ class App extends React.Component {
     // this.state.repos = this.state.repos.concat(newRepos);
     // this.setState({repos: this.state.repos.concat(newRepos)});
     this.setState({repos: newRepos});
-    console.log(this.state.repos.length);
   }
 
   render () {
@@ -43,6 +42,7 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <div id="backingBox"></div>
     </div>)
   }
 }

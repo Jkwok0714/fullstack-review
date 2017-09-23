@@ -5,11 +5,13 @@ const RepoList = (props) => (
   <div>
     <h4> Repo List Component </h4>
     There are {props.repos.length} repos.
+    <div id="repoList">
 
-    {props.repos.map((singleRepo, i) => {
-      return <RepoEntry repo={singleRepo} key={i} />
-    })
-    }
+      {props.repos.map((singleRepo, i) => {
+        return <RepoEntry repo={singleRepo} key={i} />
+      })
+      }
+  </div>
   </div>
 )
 

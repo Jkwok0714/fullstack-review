@@ -22,7 +22,6 @@ class Search extends React.Component {
       url: 'http://localhost:1128/repos',
       data: JSON.stringify(queryTerm),
       success: function(result) {
-        // console.log('Ajaxxxed and got', result);
         alert('New data loaded');
         self.props.onSearch(self.state.term, result);
       },

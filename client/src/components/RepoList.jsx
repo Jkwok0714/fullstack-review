@@ -4,7 +4,7 @@ import RepoEntry from './RepoEntry.jsx';
 const RepoList = (props) => (
   <div>
     <h4> Repo List Component </h4>
-    There are {props.repos.length} repos.
+    Loaded {props.repos.length} repos.
     <div id="repoList">
 
       {props.repos.map((singleRepo, i) => {

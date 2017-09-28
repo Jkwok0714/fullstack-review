@@ -19,7 +19,7 @@ class Search extends React.Component {
     var self = this;
     var queryTerm = {query: this.state.term};
     $.post({
-      url: 'http://localhost:1128/repos',
+      url: process.env.URL + '/repos' || 'http://localhost:1128/repos',
       data: JSON.stringify(queryTerm),
       success: function(result) {
         alert('New data loaded');

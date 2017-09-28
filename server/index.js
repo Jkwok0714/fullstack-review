@@ -18,43 +18,42 @@ app.post('/repos', function (req, res) {
     var finalQuery = JSON.parse(body).query;
     var dataToAdd;
     helper.getReposByUsername(finalQuery)
-    .then((data) => {
-      data = JSON.parse(data);
-      console.log(data);
-      if (data.message) {
-        throw new Error('User doesn\'t exist');
-      } else {
-        dataToAdd = database.reformat(data);
-        return database.saveMultiple(dataToAdd);
-      }
-    })
-    .then(() => {
-      return database.getTop25();
-    })
-    .then((top25) => {
-      console.log('Got data, sending all-good to client');
-      res.status(200);
-      res.set('Content-Type', 'application/json');
-      res.end(JSON.stringify(top25));
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(404);
-      res.set('Content-Type', 'application/json');
-      res.end('Bad User');
-    });
+      .then((data) => {
+        data = JSON.parse(data);
+        console.log(data);
+        if (data.message) {
+          throw new Error('User doesn\'t exist');
+        } else {
+          dataToAdd = database.reformat(data);
+          return database.saveMultiple(dataToAdd);
+        }
+      })
+      .then(() => {
+        return database.getTop25();
+      })
+      .then((top25) => {
+        console.log('Got data, sending all-good to client');
+        res.status(200);
+        res.set('Content-Type', 'application/json');
+        res.end(JSON.stringify(top25));
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(404);
+        res.set('Content-Type', 'application/json');
+        res.end('Bad User');
+      });
   });
 });
 
 app.get('/repos', function (req, res) {
   database.getTop25()
-  .then((data) => {
-    res.status(200);
-    res.set('Content-Type', 'application/json');
-    res.end(JSON.stringify(data));
-  });
+    .then((data) => {
+      res.status(200);
+      res.set('Content-Type', 'application/json');
+      res.end(JSON.stringify(data));
+    });
 });
-
 
 let port = 1128;
 

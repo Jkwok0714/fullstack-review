@@ -15,7 +15,7 @@ class App extends React.Component {
   componentDidMount () {
     var self = this;
     $.get({
-      url: 'http://localhost:1128/repos',
+      url: process.env.URL + '/repos' || 'http://localhost:1128/repos',
       success: function(result) {
         self.search('Nothing', result);
         alert('Loaded Data');

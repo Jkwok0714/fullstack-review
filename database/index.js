@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+let mongooseURL = process.env.MONGODURL || 'mongodb://localhost/fetcher';
+mongoose.connect(mongooseURL);
 
 let repoSchema = mongoose.Schema({
   repo_id: {type: Number, unique: true },
@@ -34,8 +35,12 @@ const getTop25 = function(query = 'updated_at') {
       data.sort(function(a, b) {
         var keyA = new Date(a.updated_at);
         var keyB = new Date(b.updated_at);
-        if(keyA < keyB) return 1;
-        if(keyA > keyB) return -1;
+        if (keyA < keyB) {
+          return 1;
+        }
+        if (keyA > keyB) {
+          return -1;
+        }
         return 0;
       });
       resolve(data.splice(0, 25));
@@ -43,7 +48,7 @@ const getTop25 = function(query = 'updated_at') {
       reject(err);
     });
   });
-}
+};
 
 const find = (query, callback) => {
   return new Promise ((resolve, reject) => {
@@ -73,7 +78,7 @@ const reformat = (rawData) => {
     result.push(newRepo);
   }
   return result;
-}
+};
 
 //For app testing purposes
 let cleanDatabase = () => {
@@ -94,18 +99,18 @@ let saveMultiple = (array) => {
         return;
       } else {
         save(array[i])
-        .then(() => {
-          i++;
-          loop();
-        })
-        .catch((err) => {
-          reject(err);
-        });
+          .then(() => {
+            i++;
+            loop();
+          })
+          .catch((err) => {
+            reject(err);
+          });
       }
     };
     loop();
   });
-}
+};
 
 module.exports.save = save;
 module.exports.find = find;
